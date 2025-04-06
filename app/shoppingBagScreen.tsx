@@ -2,9 +2,11 @@ import React from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { useCart } from '@/app/context/cartContext';
 import ScreenWithIconBar from '@/components/screenWithIconBar';
+import { useRouter } from 'expo-router';
 
 export default function ShoppingBagScreen() {
   const { cart, updateQuantity, removeFromCart } = useCart();
+  const router = useRouter();
 
   const subtotal = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
@@ -69,7 +71,7 @@ export default function ShoppingBagScreen() {
               <Text style={styles.totalText}>${subtotal.toFixed(2)}</Text>
             </View>
 
-            <TouchableOpacity style={styles.buyNowButton}>
+            <TouchableOpacity style={styles.buyNowButton} onPress={() => router.push('/buyNowScreen')}>
               <Text style={styles.buyNowText}>Buy Now</Text>
             </TouchableOpacity>
           </View>

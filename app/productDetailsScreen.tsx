@@ -52,7 +52,7 @@ export default function ProductDetailsScreen() {
       size,
       quantity: 1,
     });
-    router.push('/shoppingBagScreen');
+    router.push('/shoppingBagScreen'); // ✅ Para Add to Bag
   };
 
   const handleBuyNow = () => {
@@ -63,7 +63,7 @@ export default function ProductDetailsScreen() {
       size,
       quantity: 1,
     });
-    router.push('/shoppingBagScreen');
+    router.push('/buyNowScreen'); // ✅ Para Buy Now (ahora sí está bien)
   };
 
   return (

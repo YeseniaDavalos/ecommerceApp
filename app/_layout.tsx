@@ -42,6 +42,13 @@ export default function Layout() {
               drawerItemStyle: { display: 'none' },
             }}
           />
+          <Drawer.Screen
+            name="buyNowScreen"
+            options={{
+              headerShown: false,
+              drawerItemStyle: { display: 'none' },
+            }}
+          />
         </Drawer>
       </GestureHandlerRootView>
     </CartProvider>
