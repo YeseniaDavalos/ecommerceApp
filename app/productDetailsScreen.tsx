@@ -1,5 +1,12 @@
 import React, { useState } from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useCart } from '@/app/context/cartContext';
 import ScreenWithIconBar from '@/components/screenWithIconBar';
@@ -52,7 +59,7 @@ export default function ProductDetailsScreen() {
       size,
       quantity: 1,
     });
-    router.push('/shoppingBagScreen'); // ✅ Para Add to Bag
+    router.push('/shoppingBagScreen');
   };
 
   const handleBuyNow = () => {
@@ -63,34 +70,49 @@ export default function ProductDetailsScreen() {
       size,
       quantity: 1,
     });
-    router.push('/buyNowScreen'); // ✅ Para Buy Now (ahora sí está bien)
+    router.push('/buyNowScreen');
   };
 
   return (
-    <ScreenWithIconBar>
-      <ScrollView contentContainerStyle={styles.container}>
-        <ProductImage source={selectedProduct.image} />
-        <ProductInfo name={selectedProduct.name} price={selectedProduct.price} />
-        <ColorSelector onSelect={setColor} />
-        <SizeSelector onSelect={setSize} />
-        <Accordion data={accordionData} />
-        <RecommendedProducts
-          products={products}
-          onSelect={(productId) => router.push(`/productDetailsScreen?id=${productId}`)}
-        />
-        <TwoCustomButtons onAddToBag={handleAddToCart} onBuyNow={handleBuyNow} />
-      </ScrollView>
-    </ScreenWithIconBar>
+    <SafeAreaView style={styles.safeArea}>
+      <ScreenWithIconBar>
+        <KeyboardAvoidingView
+          style={styles.keyboardAvoiding}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        >
+          <ScrollView contentContainerStyle={styles.container}>
+            <ProductImage source={selectedProduct.image} />
+            <ProductInfo name={selectedProduct.name} price={selectedProduct.price} />
+            <ColorSelector onSelect={setColor} />
+            <SizeSelector onSelect={setSize} />
+            <Accordion data={accordionData} />
+            <RecommendedProducts
+              products={products}
+              onSelect={(productId) => router.push(`/productDetailsScreen?id=${productId}`)}
+            />
+            <TwoCustomButtons onAddToBag={handleAddToCart} onBuyNow={handleBuyNow} />
+          </ScrollView>
+        </KeyboardAvoidingView>
+      </ScreenWithIconBar>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  keyboardAvoiding: {
+    flex: 1,
+  },
   container: {
     padding: 10,
     backgroundColor: '#fff',
     flexGrow: 1,
   },
 });
+
 
 
 
